@@ -6,9 +6,13 @@ import (
 
 	"encoding/json"
 
+	"net"
 	"net/http"
+	"net/url"
 
+	event_pb "github.com/maira-io/apiserver/generated/event"
 	"github.com/prometheus/alertmanager/template"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func PrometheusWebhook(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +24,29 @@ func PrometheusWebhook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println(data)
+	for _, alert := range data.Alerts {
+		event := &event_pb.Event{
+			Tenant:      "customer1",
+			Namespace:   "default",
+			EventType:   alert.Labels["alertname"],
+			Site:        getHost(data.ExternalURL),
+			Timestamp:   timestamppb.New(alert.StartsAt),
+			Message:     alert.Annotations["description"],
+			Severity:    alert.Labels["severity"],
+			Labels:      alert.Labels,
+			Annotations: alert.Annotations,
+		}
+		log.Println(event)
+	}
 
 	fmt.Fprint(w, "successfully processed")
+}
+
+func getHost(externalurl string) string {
+	u, err := url.Parse(externalurl)
+	if err != nil {
+		panic(err)
+	}
+	host, _, _ := net.SplitHostPort(u.Host)
+	return host
 }
