@@ -18,19 +18,24 @@ func TestWatermill(t *testing.T) {
 
 	cloudfunctions.SetHandlers(router, subscriber, publisher)
 	log.Println("Created handler")
+	msg := "Hello! This is test message."
+	log.Printf("sending message %s\n", msg)
+
+	cloudfunctions.PublishMessages(publisher, []byte(msg))
+
+	cloudfunctions.PublishMessages(publisher, []byte(msg))
+
+	cloudfunctions.PublishMessages(publisher, []byte(msg))
 
 	// Now that all handlers are registered, we're running the Router.
 	// Run is blocking while the router is running.
 	ctx := context.Background()
 	if err := router.Run(ctx); err != nil {
 		panic(err)
-		t.Fatal(err)
 	}
 
-	msg := "Hello! This is test message."
-	log.Printf("sending message %s\n", msg)
+	log.Println("router started..")
 
-	cloudfunctions.PublishMessages(publisher, []byte(msg))
 	assert.NotNil(t, router)
 
 }

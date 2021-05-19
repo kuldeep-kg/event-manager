@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"time"
 
 	"encoding/json"
 
@@ -30,13 +29,6 @@ func PrometheusWebhookWithWatermillRouter(w http.ResponseWriter, r *http.Request
 	publisher := CreateWatermillPublisher()
 
 	SetHandlers(router, subscriber, publisher)
-
-	// Now that all handlers are registered, we're running the Router.
-	// Run is blocking while the router is running.
-	ctx := context.Background()
-	if err := router.Run(ctx); err != nil {
-		panic(err)
-	}
 
 	defer r.Body.Close()
 
@@ -65,6 +57,13 @@ func PrometheusWebhookWithWatermillRouter(w http.ResponseWriter, r *http.Request
 	}
 
 	fmt.Fprint(w, "successfully processed")
+
+	// Now that all handlers are registered, we're running the Router.
+	// Run is blocking while the router is running.
+	ctx := context.Background()
+	if err := router.Run(ctx); err != nil {
+		panic(err)
+	}
 }
 
 func getHost(externalurl string) string {
@@ -83,6 +82,4 @@ func PublishMessages(publisher message.Publisher, payload message.Payload) {
 	if err := publisher.Publish("incoming.event.topic", msg); err != nil {
 		panic(err)
 	}
-
-	time.Sleep(time.Second)
 }

@@ -97,13 +97,13 @@ func SetHandlers(router *message.Router, subscriber *googlecloud.Subscriber, pub
 		}
 	})
 
-	// just for debug, we are printing all messages received on `incoming.event.topic`
-	router.AddNoPublisherHandler(
-		"print_incoming_messages",
-		"incoming.event.topic",
-		subscriber,
-		printMessages,
-	)
+	// // just for debug, we are printing all messages received on `incoming.event.topic`
+	// router.AddNoPublisherHandler(
+	// 	"print_incoming_messages",
+	// 	"incoming.event.topic",
+	// 	subscriber,
+	// 	printMessages,
+	// )
 
 	// just for debug, we are printing all events sent to `outgoing.event.topic`
 	router.AddNoPublisherHandler(
@@ -128,6 +128,8 @@ type structHandler struct {
 
 func (s structHandler) Handler(msg *message.Message) ([]*message.Message, error) {
 	log.Println("structHandler received message", msg.UUID)
+
+	printMessages(msg)
 
 	msg = message.NewMessage(watermill.NewUUID(), []byte("message produced by structHandler"))
 	return message.Messages{msg}, nil
