@@ -21,7 +21,7 @@ func main() {
 	maxNumberOfRoutines := 0
 
 	//Read go-routine-threads configuration from file
-	f, err := os.Open("config.yml")
+	f, err := os.Open("../config.yml")
 	if err != nil {
 		log.Println("Error while opening the configuration file: " + err.Error())
 	}
