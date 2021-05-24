@@ -1,7 +1,6 @@
 package cloudfunctions
 
 import (
-	"context"
 	"fmt"
 	"log"
 
@@ -22,13 +21,13 @@ import (
 
 func PrometheusWebhookWithWatermillRouter(w http.ResponseWriter, r *http.Request) {
 
-	router := CreateWatermillRouter()
+	// router := CreateWatermillRouter()
 
-	subscriber := CreateWatermillSubscriber()
+	// subscriber := CreateWatermillSubscriber()
 
 	publisher := CreateWatermillPublisher()
 
-	SetHandlers(router, subscriber, publisher)
+	// SetHandlers(router, subscriber, publisher)
 
 	defer r.Body.Close()
 
@@ -57,13 +56,6 @@ func PrometheusWebhookWithWatermillRouter(w http.ResponseWriter, r *http.Request
 	}
 
 	fmt.Fprint(w, "successfully processed")
-
-	// Now that all handlers are registered, we're running the Router.
-	// Run is blocking while the router is running.
-	ctx := context.Background()
-	if err := router.Run(ctx); err != nil {
-		panic(err)
-	}
 }
 
 func getHost(externalurl string) string {
@@ -79,7 +71,7 @@ func PublishMessages(publisher message.Publisher, payload message.Payload) {
 	msg := message.NewMessage(watermill.NewUUID(), payload)
 	middleware.SetCorrelationID(watermill.NewUUID(), msg)
 	log.Printf("sending message %s, correlation id: %s\n", msg.UUID, middleware.MessageCorrelationID(msg))
-	if err := publisher.Publish("incoming.event.topic", msg); err != nil {
+	if err := publisher.Publish("maira.event", msg); err != nil {
 		panic(err)
 	}
 }
