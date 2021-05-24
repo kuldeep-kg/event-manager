@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/maira-io/event-manager/cloudfunctions"
+	"github.com/maira-io/event-manager/cloudfunctions/watermillpubsub"
 )
 
 func TestWatermill(t *testing.T) {
 
-	publisher := cloudfunctions.CreateWatermillPublisher()
+	publisher := watermillpubsub.CreateWatermillPublisher()
 
 	log.Println("Created handler")
 	msg := "Hello! This is test message."

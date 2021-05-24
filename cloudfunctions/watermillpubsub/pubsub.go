@@ -1,4 +1,4 @@
-package cloudfunctions
+package watermillpubsub
 
 import (
 	"github.com/ThreeDotsLabs/watermill"

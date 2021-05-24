@@ -15,6 +15,7 @@ import (
 	"github.com/ThreeDotsLabs/watermill/message/router/middleware"
 
 	event_pb "github.com/maira-io/apiserver/generated/event"
+	"github.com/maira-io/event-manager/cloudfunctions/watermillpubsub"
 	"github.com/prometheus/alertmanager/template"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -25,7 +26,7 @@ func PrometheusWebhookWithWatermillRouter(w http.ResponseWriter, r *http.Request
 
 	// subscriber := CreateWatermillSubscriber()
 
-	publisher := CreateWatermillPublisher()
+	publisher := watermillpubsub.CreateWatermillPublisher()
 
 	// SetHandlers(router, subscriber, publisher)
 

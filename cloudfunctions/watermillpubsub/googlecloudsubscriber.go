@@ -1,5 +1,5 @@
 // Sources for https://watermill.io/docs/getting-started/
-package cloudfunctions
+package watermillpubsub
 
 import (
 	"context"
