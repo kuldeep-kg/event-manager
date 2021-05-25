@@ -1,4 +1,4 @@
-module github.com/maira-io/event-manager/cloudfunctions
+module github.com/kuldeep-kg/event-manager/cloudfunctions
 
 go 1.16
 

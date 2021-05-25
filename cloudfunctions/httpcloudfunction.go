@@ -14,8 +14,8 @@ import (
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/ThreeDotsLabs/watermill/message/router/middleware"
 
+	"github.com/kuldeep-kg/event-manager/watermillpubsub"
 	event_pb "github.com/maira-io/apiserver/generated/event"
-	"github.com/maira-io/event-manager/watermillpubsub"
 	"github.com/prometheus/alertmanager/template"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
