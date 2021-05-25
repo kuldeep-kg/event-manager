@@ -1,4 +1,4 @@
-module github.com/maira-io/event-manager/watermillpubsub
+module github.com/kuldeep-kg/event-manager/watermillpubsub
 
 go 1.16
 

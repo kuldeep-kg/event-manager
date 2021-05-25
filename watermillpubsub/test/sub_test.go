@@ -4,8 +4,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/maira-io/event-manager/cloudfunctions"
-	"github.com/maira-io/event-manager/watermillpubsub"
+	"github.com/kuldeep-kg/event-manager/cloudfunctions"
+	"github.com/kuldeep-kg/event-manager/watermillpubsub"
 )
 
 func TestWatermill(t *testing.T) {
