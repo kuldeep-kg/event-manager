@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/maira-io/event-manager/cloudfunctions"
-	"github.com/maira-io/event-manager/cloudfunctions/watermillpubsub"
+	"github.com/maira-io/event-manager/watermillpubsub"
 )
 
 func TestWatermill(t *testing.T) {
@@ -16,11 +16,9 @@ func TestWatermill(t *testing.T) {
 	msg := "Hello! This is test message."
 	log.Printf("sending message %s\n", msg)
 
-	cloudfunctions.PublishMessages(publisher, []byte(msg))
-
-	cloudfunctions.PublishMessages(publisher, []byte(msg))
-
-	cloudfunctions.PublishMessages(publisher, []byte(msg))
+	for {
+		cloudfunctions.PublishMessages(publisher, []byte(msg))
+	}
 
 	log.Println("router started..")
 

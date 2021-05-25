@@ -82,9 +82,6 @@ func process(messages <-chan *message.Message, maxNumberOfRoutines int) {
 		goroutines <- struct{}{}
 		wg.Add(1)
 		go ProcessEvent(msg, goroutines, &wg)
-		// we need to Acknowledge that we received and processed the message,
-		// otherwise, it will be resent over and over again.
-		msg.Ack()
 	}
 	wg.Wait()
 	close(goroutines)
@@ -92,10 +89,16 @@ func process(messages <-chan *message.Message, maxNumberOfRoutines int) {
 
 func ProcessEvent(msg *message.Message, goroutines <-chan struct{}, wg *sync.WaitGroup) {
 	log.Println("Starting Processing the event further to ingest the data into the database")
-	time.Sleep(time.Second * 1000)
+
+	// write code here - replace/remove the sleep command
+	time.Sleep(time.Second * 300)
+
 	log.Println("Finished Processing the event further to ingest the data into the database")
 
-	<-goroutines
+	// we need to Acknowledge that we received and processed the message,
+	// otherwise, it will be resent over and over again.
+	msg.Ack()
 
+	<-goroutines
 	wg.Done()
 }
